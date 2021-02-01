@@ -4,21 +4,14 @@ docker-build:
 	-f dcomposes/docker-compose.yml \
 	build
 
-blank-map:
+basic-monitor:
 	xhost + 127.0.0.1
 	docker-compose \
 	-p cpp-system-monitor \
 	-f dcomposes/docker-compose.basic.yml \
-	up
+	run cpp
 
-route-old:
-	xhost + 127.0.0.1
-	docker-compose \
-	-p cpp-system-monitor \
-	-f dcomposes/docker-compose.yml \
-	up
-
-route:
+system-monitor:
 	xhost + 127.0.0.1
 	docker-compose \
 	-p cpp-system-monitor \

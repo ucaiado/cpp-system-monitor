@@ -1,7 +1,7 @@
 FROM ubuntu:16.04
 RUN apt update -y && \
-    apt install build-essential wget libcairo2-dev libgraphicsmagick1-dev \
-    libpng-dev software-properties-common -y && \
+    apt install build-essential wget vim libcairo2-dev libgraphicsmagick1-dev \
+    libpng-dev software-properties-common libncurses5-dev libncursesw5-dev -y && \
     apt-add-repository ppa:ubuntu-toolchain-r/test -y  && \
     apt update -y && \
     apt install g++-7 -y && \
@@ -12,6 +12,6 @@ RUN apt update -y && \
 WORKDIR /cmake-3.14.3
 RUN ./bootstrap && make && make install
 WORKDIR /
-RUN mkdir -p /CppND-System-Monitor-Project-Updated'
+RUN mkdir -p /CppND-System-Monitor-Project-Updated
 RUN mkdir -p /scripts
 COPY ./scripts/build-project.sh /build-project.sh
