@@ -15,3 +15,9 @@ system-monitor:
 	-p cpp-system-monitor \
 	-f dcomposes/docker-compose.yml \
 	run cpp
+
+compile-monitor:
+	docker-compose \
+	-p cpp-system-monitor \
+	-f dcomposes/docker-compose.justcompile.yml \
+	run cpp
