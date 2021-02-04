@@ -8,8 +8,9 @@ services:
       - "8888:8888"
       - "8080:8080"
     volumes:
-      - ../CppND-Route-Planning-Project:/CppND-Route-Planning-Project
-      - ../route_model:/CppND-Route-Planning-Project/src
+      - ../CppND-System-Monitor-Project-Updated:/CppND-System-Monitor-Project-Updated
+      - ../system_monitor/src:/CppND-System-Monitor-Project-Updated/src
+      - ../system_monitor/include:/CppND-System-Monitor-Project-Updated/include
       - ../scripts/build-project.sh:/build-project.sh
     environment:
         - DISPLAY=docker.for.mac.host.internal:0

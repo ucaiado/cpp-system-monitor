@@ -22,11 +22,10 @@ $ make basic-monitor
 ### Run
 In a terminal or command window, navigate to the top-level project directory
  `cpp-system-monitor/` (that contains this README) and run the following
- commands. This will run the project tests and then run the final code.
+ command.
 
 ```shell
-$ make tests
-$ make ...
+$ make system-monitor
 ```
 
 
