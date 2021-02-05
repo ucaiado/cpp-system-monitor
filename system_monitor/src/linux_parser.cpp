@@ -70,7 +70,7 @@ vector<int> LinuxParser::Pids() {
 // TODO: Read and return the system memory utilization
 float LinuxParser::MemoryUtilization() { return 0.0; }
 
-// TODO: Read and return the system uptime
+// Read and return the system uptime
 long LinuxParser::UpTime() {
   long system_uptime, idle_uptime;
   string line;
