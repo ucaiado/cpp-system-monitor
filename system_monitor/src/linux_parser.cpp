@@ -72,6 +72,7 @@ float LinuxParser::MemoryUtilization() {
   string line;
   string key, value;
   float f_memtotal = 1.0, f_memfree = 1.0;
+  int i_count = 0;
   std::ifstream filestream(kProcDirectory + kMeminfoFilename);
   // NOTE: using answ in https://bit.ly/2MTXWf6
   if (filestream.is_open()) {
@@ -80,9 +81,14 @@ float LinuxParser::MemoryUtilization() {
       while (linestream >> key >> value) {
         if (key == "MemTotal:") {
           f_memtotal = std::stof(value);
+          i_count += 1;
         }
         if (key == "MemFree:") {
           f_memfree = std::stof(value);
+          i_count += 1;
+        }
+        if (i_count == 2) {
+          break;
         }
       }
     }
