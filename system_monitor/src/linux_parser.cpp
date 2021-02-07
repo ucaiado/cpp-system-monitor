@@ -108,12 +108,34 @@ long LinuxParser::UpTime() {
   return system_uptime;
 }
 
-// TODO: Read and return the number of jiffies for the system
-long LinuxParser::Jiffies() { return 0; }
+// Read and return the number of jiffies for the system
+long LinuxParser::Jiffies() {
+  // source: https://knowledge.udacity.com/questions/129844
+  // sysconf(_SC_CLK_TCK) - > system frequency: the number of ticks per second
+  return UpTime() * sysconf(_SC_CLK_TCK);
+}
 
-// TODO: Read and return the number of active jiffies for a PID
-// REMOVE: [[maybe_unused]] once you define the function
-long LinuxParser::ActiveJiffies(int pid[[maybe_unused]]) { return 0; }
+// Read and return the number of active jiffies for a PID
+long LinuxParser::ActiveJiffies(int pid) {
+  // source: https://bit.ly/3rrLlPe
+  // total_time = utime + stime + cutime + cstime
+  string line, value;
+  float f_jiffies = 0.0;
+  std::ifstream filestream(kProcDirectory + std::to_string(pid) +
+                           kStatFilename);
+  if (filestream.is_open()) {
+    while (std::getline(filestream, line)) {
+      std::istringstream linestream(line);
+      for (int ii = 0; ii < 17; ii++) {
+        linestream >> value;
+        if (ii >= 13) {
+          f_jiffies = std::stol(value);
+        }
+      }
+    }
+  }
+  return f_jiffies;
+}
 
 // Read and return the number of active jiffies for the system
 long LinuxParser::ActiveJiffies() {
