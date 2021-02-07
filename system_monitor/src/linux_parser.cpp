@@ -203,7 +203,7 @@ int LinuxParser::TotalProcesses() {
   return i_processes;
 }
 
-// TODO: Read and return the number of running processes
+// Read and return the number of running processes
 int LinuxParser::RunningProcesses() {
   string line, key, value;
   int i_running_processes = 0;
