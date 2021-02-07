@@ -116,7 +116,7 @@ long LinuxParser::Jiffies() { return 0; }
 // REMOVE: [[maybe_unused]] once you define the function
 long LinuxParser::ActiveJiffies(int pid[[maybe_unused]]) { return 0; }
 
-// TODO: Read and return the number of active jiffies for the system
+// Read and return the number of active jiffies for the system
 long LinuxParser::ActiveJiffies() {
   auto vec_cpu_load = LinuxParser::CpuUtilization();
   // source: https://bit.ly/3cPFsrg
@@ -133,7 +133,7 @@ long LinuxParser::ActiveJiffies() {
   return f_nonidle;
 }
 
-// TODO: Read and return the number of idle jiffies for the system
+// Read and return the number of idle jiffies for the system
 long LinuxParser::IdleJiffies() {
   auto vec_cpu_load = LinuxParser::CpuUtilization();
   // source: https://bit.ly/3cPFsrg
