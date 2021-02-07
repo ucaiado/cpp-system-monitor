@@ -117,10 +117,34 @@ long LinuxParser::Jiffies() { return 0; }
 long LinuxParser::ActiveJiffies(int pid[[maybe_unused]]) { return 0; }
 
 // TODO: Read and return the number of active jiffies for the system
-long LinuxParser::ActiveJiffies() { return 0; }
+long LinuxParser::ActiveJiffies() {
+  auto vec_cpu_load = LinuxParser::CpuUtilization();
+  // source: https://bit.ly/3cPFsrg
+  // NonIdle = user + nice + system + irq + softirq + steal
+  // !! from post: guest and guest_nice should be added to NonIdle as well
+  vector<int> vec2account{CPUStates::kUser_,     CPUStates::kNice_,
+                          CPUStates::kSystem_,   CPUStates::kSoftIRQ_,
+                          CPUStates::kSteal_,    CPUStates::kGuest_,
+                          CPUStates::kGuestNice_};
+  float f_nonidle = 0.0;
+  for (int ii : vec2account) {
+    f_nonidle += std::stol(vec_cpu_load[ii]);
+  }
+  return f_nonidle;
+}
 
 // TODO: Read and return the number of idle jiffies for the system
-long LinuxParser::IdleJiffies() { return 0; }
+long LinuxParser::IdleJiffies() {
+  auto vec_cpu_load = LinuxParser::CpuUtilization();
+  // source: https://bit.ly/3cPFsrg
+  // Idle = idle + iowait
+  vector<int> vec2account{CPUStates::kIdle_, CPUStates::kIOwait_};
+  float f_idle = 0.0;
+  for (int ii : vec2account) {
+    f_idle += std::stol(vec_cpu_load[ii]);
+  }
+  return f_idle;
+}
 
 // Read and return CPU utilization
 vector<string> LinuxParser::CpuUtilization() {
