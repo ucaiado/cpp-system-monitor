@@ -20,17 +20,16 @@ Processor& System::Cpu() { return cpu_; }
 // TODO: Return a container composed of the system's processes
 vector<Process>& System::Processes() {
   vector<int> vec_pids = LinuxParser::Pids();
-  // float f_nonidle = LinuxParser::ActiveJiffies();
-  // float f_idle = LinuxParser::IdleJiffies();
-  // for (int pid : vec_pids) {
-  //   Process this_process;
-  //   this_process.Pid(pid);
-  //   this_process.CpuUtilization(LinuxParser::ActiveJiffies(pid) /
-  //                               (f_nonidle + f_idle));
-  //   this_process.Command(LinuxParser::Command(pid));
-  //   this_process.Ram(LinuxParser::Ram(pid));
-  //   processes_.push_back(this_process);
-  // }
+  processes_.clear();
+  processes_.resize(vec_pids.size());
+  for (int pid : vec_pids) {
+    Process this_process;
+    this_process.Pid(pid);
+    // this_process.User(LinuxParser::User(pid));
+    // this_process.UpTime(LinuxParser::UpTime(pid));
+    processes_.push_back(this_process);
+  }
+  std::sort(processes_.begin(), processes_.end());
   return processes_;
 }
 
