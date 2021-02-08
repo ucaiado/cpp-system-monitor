@@ -4,39 +4,38 @@
 #include <string>
 #include <vector>
 
+#include "linux_parser.h"
 #include "process.h"
 
 using std::string;
 using std::to_string;
 using std::vector;
 
-// Return this process's ID
+// TODO: Return this process's ID
 int Process::Pid() { return pid_; }
 void Process::Pid(int pid) { pid_ = pid; }
 
-// Return this process's CPU utilization
-float Process::CpuUtilization() { return process_cpu_; }
-void Process::CpuUtilization(float process_cpu) { process_cpu_ = process_cpu; }
-
-// Return the command that generated this process
-string Process::Command() { return cmd_; }
-void Process::Command(string cmd) { cmd_ = cmd; }
-
-// Return this process's memory utilization
-string Process::Ram() { return process_ram_; }
-void Process::Ram(string process_ram) { process_ram_ = process_ram; }
-
-// Return the user (name) that generated this process
-string Process::User() { return user_; }
-void Process::User(string user) { user_ = user; }
-
-// Return the age of this process (in seconds)
-long int Process::UpTime() { return process_uptime_; }
-void Process::UpTime(long int process_uptime) {
-  process_uptime_ = process_uptime;
+// TODO: Return this process's CPU utilization
+float Process::CpuUtilization() {
+  float f_nonidle = LinuxParser::ActiveJiffies();
+  float f_idle = LinuxParser::IdleJiffies();
+  return LinuxParser::ActiveJiffies(pid_) / (f_nonidle + f_idle);
 }
 
-// Overload the "less than" comparison operator for Process objects
+// TODO: Return the command that generated this process
+string Process::Command() { return LinuxParser::Command(pid_); }
+
+// TODO: Return this process's memory utilization
+string Process::Ram() { return LinuxParser::Ram(pid_); }
+
+// TODO: Return the user (name) that generated this process
+string Process::User() { return LinuxParser::User(pid_); }
+
+// TODO: Return the age of this process (in seconds)
+long int Process::UpTime() { return LinuxParser::UpTime(pid_); }
+
+// TODO: Overload the "less than" comparison operator for Process objects
+// REMOVE: [[maybe_unused]] once you define the function
 bool Process::operator<(Process const& a) const {
-  return process_cpu_ < a.process_cpu_;
+  return process_cpu_ > a.process_cpu_;
 }
