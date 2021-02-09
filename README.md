@@ -13,7 +13,7 @@ This project is part of the [C++ Nanodegree](https://www.udacity.com/course/c-pl
 To set up your environment to run the code in this repository, start by cloning
  this project using the `--recurse-submodules` flag. Afterward, install Docker
  on your machine. Finally, run the following commands. This will start a
- starter monitor without the code implemented yet.
+ initial monitor without data to test the environment.
 ```shell
 $ make docker-build
 $ make basic-monitor
