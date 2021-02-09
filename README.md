@@ -4,7 +4,7 @@ Building a System Monitor
 
 This project is part of the [C++ Nanodegree](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213)
  program from Udacity. I wrote a Linux system monitor with similar functionality
-  to the widely used htop application using C++ OOP.
+ to the widely used htop application using C++ OOP.
 
 <p align="center"><img src="monitor.png" alt="Example" width="65%" style="middle"></p>
 
@@ -12,7 +12,8 @@ This project is part of the [C++ Nanodegree](https://www.udacity.com/course/c-pl
 ### Install
 To set up your environment to run the code in this repository, start by cloning
  this project using the `--recurse-submodules` flag. Afterward, install Docker
- in your machine. Finally, run the following commands.
+ on your machine. Finally, run the following commands. This will start a
+ starter monitor without the code implemented yet.
 ```shell
 $ make docker-build
 $ make basic-monitor
@@ -22,7 +23,7 @@ $ make basic-monitor
 ### Run
 In a terminal or command window, navigate to the top-level project directory
  `cpp-system-monitor/` (that contains this README) and run the following
- command.
+ command, which will start the code implemented in this repository.
 
 ```shell
 $ make system-monitor
