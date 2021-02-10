@@ -9,8 +9,8 @@
 #include "system.h"
 
 #include <iostream>
+#include <set>
 #include <string>
-#include<set>
 
 using std::string;
 using std::to_string;
@@ -78,12 +78,13 @@ void NCursesDisplay::DisplayProcesses(std::vector<Process>& processes,
   std::set<int> set_pids;
   // check if the process has a command associated and  a valid pid
   for (int i = 0; i < n; ++i) {
-    if (processes[i].Command() == ""){
+    if (processes[i].Command() == "") {
       continue;
     }
-    if(set_pids.find(processes[i].Pid()) == set_pids.end()){
+    if (set_pids.find(processes[i].Pid()) == set_pids.end()) {
       set_pids.insert(processes[i].Pid());
-      mvwprintw(window, ++row, pid_column, to_string(processes[i].Pid()).c_str());
+      mvwprintw(window, ++row, pid_column,
+                to_string(processes[i].Pid()).c_str());
       mvwprintw(window, row, user_column, processes[i].User().c_str());
       float cpu = processes[i].CpuUtilization() * 100;
       mvwprintw(window, row, cpu_column, to_string(cpu).substr(0, 4).c_str());
@@ -95,9 +96,6 @@ void NCursesDisplay::DisplayProcesses(std::vector<Process>& processes,
     }
   }
 }
-
-
-
 
 void NCursesDisplay::Display(System& system, int n) {
   initscr();      // start ncurses
