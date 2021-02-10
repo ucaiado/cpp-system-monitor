@@ -8,6 +8,10 @@
 #include "ncurses_display.h"
 #include "system.h"
 
+#include <iostream>
+#include <string>
+#include<set>
+
 using std::string;
 using std::to_string;
 
@@ -69,18 +73,31 @@ void NCursesDisplay::DisplayProcesses(std::vector<Process>& processes,
   mvwprintw(window, row, time_column, "TIME+");
   mvwprintw(window, row, command_column, "COMMAND");
   wattroff(window, COLOR_PAIR(2));
+  // NOTE: apparently,  proces_.clear() in sustem.cpp is mot working
+  //  as expected so use set here to avoid duplicate pids
+  std::set<int> set_pids;
+  // check if the process has a command associated and  a valid pid
   for (int i = 0; i < n; ++i) {
-    mvwprintw(window, ++row, pid_column, to_string(processes[i].Pid()).c_str());
-    mvwprintw(window, row, user_column, processes[i].User().c_str());
-    float cpu = processes[i].CpuUtilization() * 100;
-    mvwprintw(window, row, cpu_column, to_string(cpu).substr(0, 4).c_str());
-    mvwprintw(window, row, ram_column, processes[i].Ram().c_str());
-    mvwprintw(window, row, time_column,
-              Format::ElapsedTime(processes[i].UpTime()).c_str());
-    mvwprintw(window, row, command_column,
-              processes[i].Command().substr(0, window->_maxx - 46).c_str());
+    if (processes[i].Command() == ""){
+      continue;
+    }
+    if(set_pids.find(processes[i].Pid()) == set_pids.end()){
+      set_pids.insert(processes[i].Pid());
+      mvwprintw(window, ++row, pid_column, to_string(processes[i].Pid()).c_str());
+      mvwprintw(window, row, user_column, processes[i].User().c_str());
+      float cpu = processes[i].CpuUtilization() * 100;
+      mvwprintw(window, row, cpu_column, to_string(cpu).substr(0, 4).c_str());
+      mvwprintw(window, row, ram_column, processes[i].Ram().c_str());
+      mvwprintw(window, row, time_column,
+                Format::ElapsedTime(processes[i].UpTime()).c_str());
+      mvwprintw(window, row, command_column,
+                processes[i].Command().substr(0, window->_maxx - 46).c_str());
+    }
   }
 }
+
+
+
 
 void NCursesDisplay::Display(System& system, int n) {
   initscr();      // start ncurses
