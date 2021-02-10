@@ -14,10 +14,10 @@ using std::size_t;
 using std::string;
 using std::vector;
 
-// TODO: Return the system's CPU
+// Return the system's CPU
 Processor& System::Cpu() { return cpu_; }
 
-// TODO: Return a container composed of the system's processes
+// Return a container composed of the system's processes
 vector<Process>& System::Processes() {
   vector<int> vec_pids = LinuxParser::Pids();
   processes_.clear();
@@ -25,8 +25,6 @@ vector<Process>& System::Processes() {
   for (int pid : vec_pids) {
     Process this_process;
     this_process.Pid(pid);
-    // this_process.User(LinuxParser::User(pid));
-    // this_process.UpTime(LinuxParser::UpTime(pid));
     processes_.emplace_back(this_process);
   }
   std::sort(processes_.begin(), processes_.end());
@@ -36,7 +34,7 @@ vector<Process>& System::Processes() {
 // Return the system's kernel identifier (string)
 std::string System::Kernel() { return LinuxParser::Kernel(); }
 
-// TODO: Return the system's memory utilization
+// Return the system's memory utilization
 float System::MemoryUtilization() { return LinuxParser::MemoryUtilization(); }
 
 // Return the operating system name
